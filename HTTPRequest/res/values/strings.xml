@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HTTPRequest</string>
+	<string name="search">查询</string>
+	<string name="Title">标题</string>
+	<string name="Content">内容</string>
+    
+</resources>
