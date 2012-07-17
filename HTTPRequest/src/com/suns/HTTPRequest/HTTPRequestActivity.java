@@ -39,14 +39,11 @@ import android.widget.Toast;
 public class HTTPRequestActivity extends ListActivity {
     /** Called when the activity is first created. */
 	private ListView listview=null;
-	private ListView hotlist=null;
 	private String result="";
 	private String url="http://www.bling0.com/all/latest.json";
 	private ArrayList<HashMap<String,String>> list=new ArrayList<HashMap<String,String>>();
 	private HashMap<String,String> map=null;
 	private Button more=null;
-	private Button newest=null;
-	private Button hotest=null;
 	private ProgressBar bar =null;
 	private Integer page=null;
 	private Integer count=1;   
@@ -59,8 +56,6 @@ public class HTTPRequestActivity extends ListActivity {
 	private Handler handler=null;
 	private Intent intent1=null;
 	private Intent intent2=null;
-	private HttpClient client=null;
-	private HttpGet request=null;
 	private LayoutParams FFlayoutParams =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.FILL_PARENT);
 	private LayoutParams mLayoutParams =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 	private LayoutParams BLayoutParams =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -71,14 +66,9 @@ public class HTTPRequestActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
         handler=new Handler();
         lin=new LinearLayout(this);      
         lin.setOrientation(LinearLayout.HORIZONTAL);
-   
-        newest=(Button)findViewById(R.id.newest);
-        newest.setClickable(false);
-        hotest=(Button)findViewById(R.id.hotest);
         
         more=new Button(this);
         more.setText("更多");
@@ -97,9 +87,6 @@ public class HTTPRequestActivity extends ListActivity {
         LinearLayout loadingLayout = new LinearLayout(this);
         loadingLayout.addView(lin,mLayoutParams);
         loadingLayout.setGravity(Gravity.CENTER);
-        
-        hotlist=(ListView)findViewById(R.id.list);
-        hotlist.addFooterView(loadingLayout);
         
         listview=getListView();
         listview.addFooterView(loadingLayout);
@@ -150,41 +137,20 @@ public class HTTPRequestActivity extends ListActivity {
 			}
         }
         );
-        
-        newest.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newest.setClickable(false);
-				hotest.setClickable(true);
-			}
-        }
-        );
-        
-        hotest.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newest.setClickable(true);
-				hotest.setClickable(false);
-			}
-        });
     }
-    
        
    @Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-	    request.abort();
 		super.onDestroy();
+		HTTPRequestActivity.this.unregisterReceiver(buttonchange);
+		HTTPRequestActivity.this.unregisterReceiver(buttonback);
 	}
     
 	public void CallWebService()
 	{
-		client=new DefaultHttpClient();
-		request=new HttpGet(geturl());
+		HttpClient client=new DefaultHttpClient();
+		HttpGet request=new HttpGet(geturl());
 		ResponseHandler<String> handler=new BasicResponseHandler();
 		try{
 			result=client.execute(request,handler);
@@ -223,6 +189,10 @@ public class HTTPRequestActivity extends ListActivity {
 			}
 			map.put("content", content);
 			list.add(map);	
+//			if(count!=1)
+//			{
+//				listadapter.notifyDataSetChanged();
+//			}
 		}
 		
 		
@@ -257,6 +227,7 @@ public class HTTPRequestActivity extends ListActivity {
 		seturl(url);
 		CallWebService();
 		}
+		
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -283,6 +254,7 @@ public class HTTPRequestActivity extends ListActivity {
 			{			
 				more.setVisibility(View.GONE);
 				bar.setVisibility(View.VISIBLE);
+//				Log.i("aaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaa");
 			}   		
 		}
 	}
@@ -296,6 +268,7 @@ public class HTTPRequestActivity extends ListActivity {
 			
 			if(action.equals(BarAction))
 			{ 
+//				Log.i("bbbbbbbbbbbbbbbbb", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 				bar.setVisibility(View.GONE);
 				more.setVisibility(View.VISIBLE);
 			}		
