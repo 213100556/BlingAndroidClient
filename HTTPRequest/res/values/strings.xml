@@ -6,5 +6,7 @@
 	<string name="Title">标题</string>
 	<string name="Content">内容</string>
 	<string name="more">更多</string>
+	<string  name="newest">最新</string>
+	<string  name="hotest">最热</string>
     
 </resources>

@@ -11,7 +11,7 @@
     android:layout_width="180dip"
     android:layout_height="30dip"
     android:textSize="10pt"
-    android:singleLine="true"
+    android:singleLine="false"
     />
 
   <TextView 
@@ -19,7 +19,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:textSize="5pt"
-    android:singleLine="true"
     android:gravity="right"
+    android:singleLine="false"
+    android:scrollbars="vertical"
     />
+  
 </LinearLayout>
