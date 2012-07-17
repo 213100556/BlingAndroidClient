@@ -3,7 +3,8 @@ package com.suns.HTTPRequest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
+//import android.util.Log;
 import android.widget.TextView;
 
 public class Invitation_Detail extends Activity {
@@ -17,15 +18,11 @@ public class Invitation_Detail extends Activity {
 		setContentView(R.layout.invitation_detail);
 		Title=(TextView)findViewById(R.id.bigtitle);
 		Content=(TextView)findViewById(R.id.contentdetail);
+		Content.setMovementMethod(ScrollingMovementMethod.getInstance());
 		Intent intent=getIntent();
 		String titletext=intent.getStringExtra("title");
 		String contenttext=intent.getStringExtra("content");
 		Title.setText(titletext);
 		Content.setText(contenttext);
-		
 	}
-	
-	
-	
-
 }
